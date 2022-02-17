@@ -49,6 +49,20 @@ class MovieController extends AbstractController{
     {
         return $this->render('main/list.html.twig');
     }
+    /**
+     * displays the api 
+     *
+     * @return Response
+     * 
+     * @Route("/api", name="api")
+     */
+    public function api() :Response
+    {
+        $movie = new Data;
+        
+        $data = $movie->getshows();
+        return $this->json($data);
+    }
 
     
 
