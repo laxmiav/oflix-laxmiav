@@ -1,6 +1,18 @@
 index:
-   path: /
+   path: /test/
    controller: App\Controller\MainController::homepage
-Json:
-   path: /test/json
-   controller: App\Controller\MainController::testJson
+# json:
+#    path: /test/json
+#    controller: App\Controller\MainController::testJson
+# homepage:
+#    path: /
+#    controller: App\Controller\MainController::testJson
+# show:
+#    path: /movie/{id}
+#    controller: App\Controller\MainController::find()
+# favorites:
+#    path: /favorites
+#    controller: App\Controller\MainController::favorites
+# list:
+#    path: /Movies/list
+#    controller: App\Controller\MainController::all
