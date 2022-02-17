@@ -1,6 +1,6 @@
 <?php
 namespace App\Controller;
-
+use App\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +28,9 @@ class MovieController extends AbstractController{
      * @Route("/favorites", name="favorites")
      */
     public function favorites() :Response
+
     {
+        
         return $this->render('main/favorites.html.twig');
     }
 
