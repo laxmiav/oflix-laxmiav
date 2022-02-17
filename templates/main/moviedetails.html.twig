@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-Détail du film { nom du film}
+Détail du film  {{flim.title}}
 {% endblock %}
 
 
@@ -16,31 +16,25 @@ Détail du film { nom du film}
                 <div
                     class="row g-0 borderrr rrrounded overflow-hidden flex-md-row align-items-start mb-4 shadow-smmm position-relative">
                     <div class="col-4 movie__poster img-thumbnail"
-                        style="background-image: url(https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg);">
+                        style="background-image: url({{flim.poster}});">
                         <img src="{{asset('images/poster-placeholder.png')}}" class="img-fluid">
                         <!--img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid"-->
                     </div>
 
                     <div class="col-8 p-4 d-flex flex-column position-static bg-light">
                         <a href="" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
-                        <strong class="d-inline-block mb-2 text-primary">Film</strong>
-                        <h3 class="mb-1">A Bug's Life</h3>
-                        <div class="mb-1 text-muted">93 min</div>
+                        <strong class="d-inline-block mb-2 text-primary">{{flim.type}}</strong>
+                        <h3 class="mb-1">{{flim.title}}</h3>
+                        <div class="mb-1 text-muted">{{flim.duration}}</div>
                         <p>
                             <span class="badge bg-warning text-dark">Animation</span>
                             <span class="badge bg-warning text-dark">Aventure</span>
                             <span class="badge bg-warning text-dark">Comédie</span>
                             <span class="badge bg-warning text-dark">Famille</span>
                         </p>
-                        <p>Tilt, fourmi quelque peu tête en l'air, détruit par
-                            inadvertance la
-                            récolte de la saison. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum
-                            molestias eaque consequuntur quia enim numquam, sint, cumque incidunt facilis suscipit
-                            fugiat ut beatae amet debitis? Delectus quos omnis dolor facere?
+                        <p>{{flim.summary}}
                         </p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dignissimos recusandae
-                            hic reprehenderit. Ipsum, laborum nostrum temporibus aperiam itaque perferendis neque hic
-                            libero natus! Cupiditate iste hic nemo ea pariatur?
+                        <p>{{flim.synopsis}}
                         </p>
                         <div class="d-flex mb-4" style="color: orange;">
                             <i class="bi bi-star-fill"></i>
@@ -48,7 +42,7 @@ Détail du film { nom du film}
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-half"></i>
-                            <span class="ps-1">4.8</span>
+                            <span class="ps-1">{{flim.rating}}</span>
                         </div>
 
                         <h2>3 Saisons</h2>
@@ -68,7 +62,7 @@ Détail du film { nom du film}
                             <dt class="col-sm-12">Pays</dt>
                             <dd class="col-sm-12">USA</dd>
                             <dt class="col-sm-12">Année</dt>
-                            <dd class="col-sm-12">1998</dd>
+                            <dd class="col-sm-12">{{flim.release_date}}</dd>
                         </dl>
 
                     </div>
