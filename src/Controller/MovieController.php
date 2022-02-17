@@ -14,7 +14,7 @@ class MovieController extends AbstractController{
      *
      * @return Response
      * 
-     * @Route("/movie/{id}", name="moviedetails" )
+     * @Route("/movie/{id}", name="moviedetails", requirements={"id"="\d+"})
      */
     public function show(int $id) :Response
 
