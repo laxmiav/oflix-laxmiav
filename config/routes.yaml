@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+   path: /
+   controller: App\Controller\MainController::homepage
+Json:
+   path: /test/json
+   controller: App\Controller\MainController::testJson
