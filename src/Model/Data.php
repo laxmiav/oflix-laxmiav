@@ -2,7 +2,7 @@
 namespace App\Model;
 class Data{
 
-     protected $shows = [
+     private static $shows = [
 
             [
                 'type' => 'Film',
@@ -54,20 +54,29 @@ class Data{
      /**
       * Get the value of shows
       */ 
-     public function getShows()
+     public static function getShows()
      {
-          return $this->shows;
+        return static::$shows;
      }
 
-     /**
-      * Set the value of shows
-      *
-      * @return  self
-      */ 
-     public function setShows($shows)
-     {
-          $this->shows = $shows;
+      /**
+     * get informations for the given $showId
+     *
+     * @param integer $showId id of the show
+     * @return array|null returns null if the id the not found
+     */
+    public static function getShow(int $showId) :array
+    {
+        // on vérifie si l'identifiant existe dans le tableau
+        if ( ! array_key_exists($showId, static::$shows))
+        {
+            return new \Exception('movie not found');
+            return null;
+        }
 
-          return $this;
-     }
+        // ici la clef existe 
+        return static::$shows[$showId];
+    }
+
+   
 }

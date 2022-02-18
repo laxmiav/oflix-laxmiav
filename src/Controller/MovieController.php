@@ -14,25 +14,38 @@ class MovieController extends AbstractController{
      *
      * @return Response
      * 
-     * @Route("/movie/{id}", name="moviedetails", requirements={"id"="\d+"})
+     * @Route("/movie/{id}", name="moviedetails", requirements={"id"="\d+"} ,  methods={"GET"})
      */
-    public function show(int $id) :Response
+    public function show(int $id = 0) :Response
 
     {
-        $movie = new Data;
+        // $movie = new Data;
         
-        $flim = $movie->getshows();
-        if ( ! array_key_exists($id,  $flim))
+        // $flim = $movie->getshows();
+        // if ( ! array_key_exists($id,  $flim))
+        // {
+        //     // on jette une exception lorsque l'on rencontre une erreur
+        //     // mais que l'on ne veut pas la gérer
+        //     throw $this->createNotFoundException('The show does not exist');
+
+        // }
+         // préparation des données
+        // require_once __DIR__ . '/../../sources/data.php';
+
+        $flim = Data::getShow($id);
+
+        // on vérifie si l'identifiant existe dans le tableau
+        if ( is_null($flim))
         {
             // on jette une exception lorsque l'on rencontre une erreur
             // mais que l'on ne veut pas la gérer
             throw $this->createNotFoundException('The show does not exist');
-
         }
 
 
 
-        return $this->render('movie/moviedetails.html.twig',['flim' => $flim[$id]]);
+
+        return $this->render('movie/moviedetails.html.twig',['flim' => $flim]);
     }
  /**
      * displays the favoris 
@@ -59,20 +72,7 @@ class MovieController extends AbstractController{
     {
         return $this->render('movie/list.html.twig');
     }
-    /**
-     * displays the api 
-     *
-     * @return Response
-     * 
-     * @Route("/api", name="api")
-     */
-    public function api() :Response
-    {
-        $movie = new Data;
-        
-        $data = $movie->getshows();
-        return $this->json($data);
-    }
+  
 
     
 
