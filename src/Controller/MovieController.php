@@ -22,7 +22,7 @@ class MovieController extends AbstractController{
         $movie = new Data;
         
         $flim = $movie->getshows();
-        return $this->render('main/moviedetails.html.twig',['flim' => $flim[$id]]);
+        return $this->render('movie/moviedetails.html.twig',['flim' => $flim[$id]]);
     }
  /**
      * displays the favoris 
@@ -35,7 +35,7 @@ class MovieController extends AbstractController{
 
     {
         
-        return $this->render('main/favorites.html.twig');
+        return $this->render('movie/favorites.html.twig');
     }
 
 /**
@@ -47,7 +47,7 @@ class MovieController extends AbstractController{
      */
     public function showList() :Response
     {
-        return $this->render('main/list.html.twig');
+        return $this->render('movie/list.html.twig');
     }
     /**
      * displays the api 
