@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-use App\Model\Data;
+
+use App\Model\ShowModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,17 +10,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiController extends AbstractController
 {
     /**
-     * displays the api 
-     *
-     * @return Response
-     * 
-     * @Route("/api", name="api")
+     * @Route("/api", name="movie_api")
      */
-    public function api() :Response
+    public function index(): Response
     {
-        $movie = new Data;
-        
-        $data = $movie->getshows();
-        return $this->json($data);
+        // préparation des données
+        // require_once __DIR__ . '/../../sources/data.php';
+        // $showModel = new ShowModel();
+        $shows = ShowModel::getShowList();
+
+        return $this->json($shows);
     }
 }

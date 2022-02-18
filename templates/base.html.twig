@@ -22,7 +22,11 @@
 <body>
 
     <!-- Nav -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"  >
+  {% if app.session.get('colorTheme', 'dark') == 'dark' %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    {% else %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fecc00;">
+    {% endif %}
         <div class="container-fluid">
             <a href="{{path('homepage')}}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none header-logo">
                 <img src="{{asset('favicon.png')}}" height="24" alt="sympony">
@@ -38,10 +42,10 @@
                         <a class="nav-link active" href="{{path('homepage')}}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{path('list')}}"><i class="bi bi-film"></i> Films, séries TV</a>
+                        {# <a class="nav-link" href="{{path('list')}}"><i class="bi bi-film"></i> Films, séries TV</a> #}
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{path('favorites')}}"><i class="bi bi-bookmark"></i> Ma liste</a>
+                        <a class="nav-link" href="{{ path('movie_favorite') }}"><i class="bi bi-bookmark"></i> Ma liste</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -78,7 +82,7 @@
     <!-- footer -->
     <footer class="container-fluid py-4 border-top text-center">
         <span class="text-muted">O'flix made with &hearts; at O'clock !
-            <br><small>Thème :<a href="" class="link-secondary text-decoration-none"><i class="bi bi-toggle-on mx-1"></i>Netflix</a></small></a>
+           <br><small>Thème : <a href="{{ path('theme-switch') }}" class="link-secondary text-decoration-none">Allociné<i class="bi bi-toggle-{% if app.session.get('colorTheme', 'dark') == 'dark' %}on{% else %}off{% endif %} mx-1"></i>Netflix</a></small></a>
         </span>
     </footer>
 

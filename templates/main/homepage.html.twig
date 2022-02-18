@@ -39,18 +39,20 @@
         <div class="col-12 col-lg-9">
 
             <h2 class="text-muted fw-bold mb-4">Les nouveautés</h2>
-{% for key,flims in flim %}
+            {% for show_id, show in show_list %}
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-                <div class="col-4 movie__poster" style="background-image: url({{flims.poster}});">
-                    <img src="{{ asset('images/poster-placeholder.png') }}" class="img-fluid">
+                <div class="col-4 movie__poster" style="background-image: url({{ show.poster }});">
+                    <img src="images/poster-placeholder.png" class="img-fluid">
                     <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
                 </div>
                 <div class="col-8 p-4 d-flex flex-column position-static">
-                    <a href="./favorites.html" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
-                    <strong class="d-inline-block mb-2 text-primary">{{flims.type}}</strong>
-                    <h3 class="mb-1">{{flims.title}}</h3>
-                    <div class="mb-1 text-muted">{{flims.duration}}</div>
-                    <p><small>{{flims.summary}}</small>
+
+                    {{ include('movie/_favorite_icon.html.twig') }}
+                    <strong class="d-inline-block mb-2 text-primary">{{ show.type }}</strong>
+                    <h3 class="mb-1">{{ show.title }}</h3>
+                    <div class="mb-1 text-muted">{{ show.duration }} min</div>
+                    <p>
+                        <small>{{ show.summary }}</small>
                     </p>
                     <div class="d-flex" style="color: orange;">
                         <i class="bi bi-star-fill"></i>
@@ -58,15 +60,16 @@
                         <i class="bi bi-star-fill"></i>
                         <i class="bi bi-star-fill"></i>
                         <i class="bi bi-star-half"></i>
-                        <span class="ps-1">{{flims.rating}}</span>
+                        <span class="ps-1">{{ show.rating }}</span>
                     </div>
-                    <a href="{{path('moviedetails',{id:key})}}" class="fs-1 mt-3 text-danger align-self-start">
+                    <a href="{{ path('movie_show', {movieId: show_id}) }}" class="fs-1 mt-3 text-danger align-self-start">
                         <i class="bi bi-arrow-right-square"></i>
                     </a>
                 </div>
             </div>
-{% endfor %}
-         
+            {% endfor %}
+
+        </div>
 
         <nav class="col-lg-9 offset-lg-3">
             <ul class="pagination">
