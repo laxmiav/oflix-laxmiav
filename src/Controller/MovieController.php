@@ -22,6 +22,16 @@ class MovieController extends AbstractController{
         $movie = new Data;
         
         $flim = $movie->getshows();
+        if ( ! array_key_exists($id,  $flim))
+        {
+            // on jette une exception lorsque l'on rencontre une erreur
+            // mais que l'on ne veut pas la gérer
+            throw $this->createNotFoundException('The show does not exist');
+
+        }
+
+
+
         return $this->render('movie/moviedetails.html.twig',['flim' => $flim[$id]]);
     }
  /**
