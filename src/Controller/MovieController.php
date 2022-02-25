@@ -106,6 +106,7 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/films/{id}", name="movie_show", requirements={"id"="\d+"}, methods={"GET"})
+     * 
      */
     public function show(int $id, MovieRepository $movierepositary): Response
     {

@@ -35,7 +35,8 @@ class Genre
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="genres")
+     * @ORM\ManyToMany(targetEntity=Movie::class, inversedBy="genres")
+     * @ORM\JoinTable(name="movie_genre")
      */
     private $movies;
 

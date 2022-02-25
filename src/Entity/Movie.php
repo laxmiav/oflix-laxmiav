@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
  */
@@ -60,19 +61,20 @@ class Movie
     private $rating;
 
     /**
-     * @ORM\ManyToMany(targetEntity=genre::class, inversedBy="movies")
+     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movies" )
+     * @ORM\JoinTable(name="movie_genre")
      */
-    // private $genres;
+     private $genres;
 
     /**
      * @ORM\ManyToOne(targetEntity=Casting::class, inversedBy="movies")
      */
     private $casting;
 
-    public function __construct()
-    {
-        $this->genres = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->genres = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
