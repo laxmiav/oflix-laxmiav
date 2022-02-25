@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Repository\MovieRepository;
 
 class MainController extends AbstractController {
 
@@ -19,12 +20,12 @@ class MainController extends AbstractController {
      * 
      * @Route("/", name="homepage")
      */
-    public function home() :Response
+    public function home( MovieRepository $movierepositary ) :Response
     {
         // TODO trouver une solution objet
         // préparation des données
         // require_once __DIR__ . '/../../sources/data.php';
-        $shows = ShowModel::getShowList();
+        $shows = $movierepositary->findall();
 
         return $this->render('main/homepage.html.twig', [
             'show_list' => $shows

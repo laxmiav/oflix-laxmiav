@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\MovieRepository;
 
 class MovieController extends AbstractController
 {
@@ -104,14 +105,13 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/films/{movieId}", name="movie_show", requirements={"movieId"="\d+"}, methods={"GET"})
+     * @Route("/films/{id}", name="movie_show", requirements={"id"="\d+"}, methods={"GET"})
      */
-    public function show(int $movieId = 0): Response
+    public function show(int $id, MovieRepository $movierepositary): Response
     {
-        // préparation des données
-        // require_once __DIR__ . '/../../sources/data.php';
-
-        $movie = ShowModel::getShow($movieId);
+       $movie = $movierepositary->find($id);
+//
+        //$movie = ShowModel::getShow($movieId);
 
         // on vérifie si l'identifiant existe dans le tableau
         if ( is_null($movie))
@@ -123,7 +123,7 @@ class MovieController extends AbstractController
 
         return $this->render('movie/show.html.twig', [
             'movie' => $movie,
-            'movie_id' => $movieId,
+            'movie_id' => $id,
         ]);
 
         // gestion avec une Exception
