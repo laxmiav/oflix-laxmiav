@@ -68,6 +68,7 @@ class Movie
 
     /**
      * @ORM\ManyToOne(targetEntity=Casting::class, inversedBy="movies")
+     * 
      */
     private $casting;
 

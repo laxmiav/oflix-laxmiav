@@ -36,6 +36,7 @@ class Casting
 
     /**
      * @ORM\OneToMany(targetEntity=Person::class, mappedBy="casting")
+     * 
      */
     private $people;
 

@@ -29,6 +29,7 @@ class Person
 
     /**
      * @ORM\ManyToOne(targetEntity=casting::class, inversedBy="people")
+     * 
      */
     private $casting;
 

@@ -9,7 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Repository\MovieRepository;
+use App\Repository\PersonRepository;
+use App\Repository\CastingRepository;
+use App\Entity\Person;
+use App\Entity\Casting;
+use App\Entity\movie;
+
 
 class MovieController extends AbstractController
 {
@@ -47,6 +54,7 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/favorites/add/{movieId}", name="movie_add_favorite", requirements={"movieId"="\d+"}, methods={"GET"})
+     * 
      */
     public function addFavorite(int $movieId, SessionInterface $session): Response
     {
@@ -106,12 +114,17 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/films/{id}", name="movie_show", requirements={"id"="\d+"}, methods={"GET"})
-     * 
+     * @Entity("person", expr="repository.find(person-id)")
+     * @Entity("casting", expr="repository.find(casting-id)")
      */
-    public function show(int $id, MovieRepository $movierepositary): Response
+    public function show(int $id,  MovieRepository $movierepositary,PersonRepository $personrepository): Response
     {
        $movie = $movierepositary->find($id);
-//
+       $castingid = $movie->getCasting();
+       $personid = $personrepository->find($castingid);
+       //$casting = $castingrepository->find(2);
+       
+
         //$movie = ShowModel::getShow($movieId);
 
         // on vérifie si l'identifiant existe dans le tableau
@@ -125,7 +138,10 @@ class MovieController extends AbstractController
         return $this->render('movie/show.html.twig', [
             'movie' => $movie,
             'movie_id' => $id,
+            'personid' => $personid,
+            
         ]);
+       // dd($person);
 
         // gestion avec une Exception
         // try {
