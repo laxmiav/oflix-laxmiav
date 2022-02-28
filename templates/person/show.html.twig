@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PersonController!{% endblock %}
+
+{% block body %}
+<h1>{{ person.firstName ~ "    " ~ person.lastName}}</h1>
+
+<ul>
+{% for casting in person.casting %}
+    <li>{{ casting.role }} ({{ casting.movie.title }})</li>
+{% else %}
+<li>Cet acteur est un noob</li>
+{% endfor %}
+</ul>
+{% endblock %}

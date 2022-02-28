@@ -45,25 +45,25 @@
                         <span class="ps-1">{{ movie.rating }}</span>
                     </div>
 
-                    <h2>3 Saisons</h2>
+                    {# <h2>3 Saisons</h2>
                     <ul class="list-unstyled">
                         <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
                         <li><span class="badge bg-danger fs-6 mb-2">Saison 2</span><small class="ms-1">(11 épisodes)</small></li>
                         <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li>
-                    </ul>
+                    </ul> #}
 
                     <dl class="row">
                         <dt class="col-sm-12">Avec</dt>
                         <dd class="col-sm-12">
-                        {# {% for key,persons in personid %}
-                      {{ dump(personsid) }} #}
-                            Acteur: {{ personid.firstName }}<br>
-                            Acteurs credit: {{ personid.casting.creditOrder }}<br>
-                            role: {{ personid.casting.role }}
+                         {% for persons in movie.castings %}
+                      
+                            Acteur: {{ persons.person.firstName }}<br>
+                            Acteurs credit: {{ persons.creditOrder }}<br>
+                            role: {{ persons.role }}<br>
                             
                             {# Acteur 2 (La reine)<br>
                             Acteur 3 (Franz)<br> #}
-                            {# {% endfor %} #}
+                             {% endfor %} 
                         </dd>
                         <dt class="col-sm-12">Pays</dt>
                         <dd class="col-sm-12">USA</dd>

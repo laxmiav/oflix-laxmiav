@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Movie;
+use App\Entity\Casting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -43,6 +44,26 @@ class MovieRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+
+    public function findOneWithAllData($movieId): ?Movie
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT m, g, c, p
+            FROM App\Entity\Movie m
+            JOIN m.genres g
+            JOIN m.castings c
+            JOIN c.person p 
+            WHERE m.id = :id'
+        );
+        $query->setParameter('id', $movieId);
+
+        // returns the movie or null if not found
+        return $query->getOneOrNullResult();
+
     }
 
     // /**

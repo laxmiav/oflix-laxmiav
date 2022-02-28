@@ -6,6 +6,7 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Jointable;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -75,8 +76,8 @@ class Movie
     private $genres;
 
     /**
-     * @ORM\OneToMany(targetEntity=casting::class, mappedBy="movie")
-     * @ORM\jointable(name= "casting")
+     * @ORM\OneToMany(targetEntity="Casting", mappedBy="movie")
+     * 
      */
     private $castings;
 

@@ -31,7 +31,7 @@ class Person
     private $lastName;
 
     /**
-     * @ORM\OneToMany(targetEntity=casting::class, mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Casting", mappedBy="person")
      * 
      */
     private $casting;

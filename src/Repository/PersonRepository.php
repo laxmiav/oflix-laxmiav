@@ -45,6 +45,25 @@ class PersonRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneByIdWithCastingAndMovie(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p, c, m
+            FROM App\Entity\Person p
+            JOIN p.casting c
+            JOIN c.movie m
+            WHERE p.id = :id
+            '
+        )->setParameter('id', $id);
+
+        // return  Person object
+        return $query->getOneOrNullResult();
+
+    }
+
+
     // /**
     //  * @return Person[] Returns an array of Person objects
     //  */

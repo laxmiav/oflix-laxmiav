@@ -114,18 +114,20 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/films/{id}", name="movie_show", requirements={"id"="\d+"}, methods={"GET"})
-     * @Entity("person", expr="repository.find(person-id)")
-     * @Entity("casting", expr="repository.find(casting-id)")
+     * 
      */
-    public function show(int $id,  MovieRepository $movierepositary,PersonRepository $personrepository): Response
+    public function show(int $id,  MovieRepository $movierepositary): Response
     {
-       $movie = $movierepositary->find($id);
-       $castingid = $movie->getCastings();
-       $personid = $personrepository->find($castingid);
+      // $movie = $movierepositary->find($id);
+       
        //$casting = $castingrepository->find(2);
        
 
         //$movie = ShowModel::getShow($movieId);
+
+        $movie = $movierepositary->findOneWithAllData($id);
+
+        
 
         // on vérifie si l'identifiant existe dans le tableau
         if ( is_null($movie))
@@ -137,9 +139,7 @@ class MovieController extends AbstractController
 
         return $this->render('movie/show.html.twig', [
             'movie' => $movie,
-            'movie_id' => $id,
-            'personid' => $personid,
-            
+            'movie_id' => $movie->getId(),
         ]);
        // dd($person);
 
