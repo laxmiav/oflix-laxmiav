@@ -39,7 +39,7 @@ $flashMessages =
             {% endfor %}
         {% endfor %}
 
-        {% for show_id, show in show_list %}
+        {% for  show in show_list %}
         <div class="col-6">
 
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
@@ -48,11 +48,11 @@ $flashMessages =
                     <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
                 </div>
                 <div class="col-8 p-4 d-flex flex-column position-static">
-                    {{ include('movie/_favorite_icon.html.twig')}}
+                    {{ include('movie/_favorite_icon.html.twig', { movie : show} )}}
                     <strong class="d-inline-block mb-2 text-primary">{{ show.type }}</strong>
                     <h3 class="mb-1">{{ show.title }}</h3>
                     <div class="mb-1 text-muted">{{ show.duration }} min</div>
-                    <a href="{{ path('movie_show', {"movieId": show_id}) }}" class="fs-1 mt-3 text-danger align-self-start">
+                    <a href="{{ path('movie_show', {"id": show.id}) }}" class="fs-1 mt-3 text-danger align-self-start">
                         <i class="bi bi-arrow-right-square"></i>
                     </a>
                 </div>

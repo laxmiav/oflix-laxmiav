@@ -2,59 +2,20 @@
 
 namespace App\Controller;
 
-use App\Model\ShowModel;
+use App\Entity\Movie;
+use App\Repository\MovieRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use App\Repository\MovieRepository;
-use App\Repository\PersonRepository;
-use App\Repository\CastingRepository;
-use App\Entity\Person;
-use App\Entity\Casting;
-use App\Entity\movie;
-
 
 class MovieController extends AbstractController
 {
 
- /**
-     * @Route("/favorites/remove/{movieId}", name="movie_remove_favorite", requirements={"movieId"="\d+"}, methods={"GET"})
-     */
-    public function removeFavorite(int $movieId, SessionInterface $session): Response
-    {
-        // récupérer le tableau des favoris
-        $currentFavorites = $session->get('favorite_list', []);
-
-        // supprimer le film demandé du tableau
-        unset($currentFavorites[$movieId]);
-
-        // re-enregistrer le tableau des favoris dans la session
-        $session->set('favorite_list', $currentFavorites);
-
-        $this->addFlash('success', 'Film retiré des favoris avec succès');
-        
-        // rediriger vers la page des favoris
-        return $this->redirectToRoute('movie_favorite');
-
-    }
-    // TODO ajouter une route removeFromFavorite qui retire des favoris et redirige vers la page des favoris
-
-
-
-
-
-
-
-
-
-
     /**
      * @Route("/favorites/add/{movieId}", name="movie_add_favorite", requirements={"movieId"="\d+"}, methods={"GET"})
-     * 
      */
     public function addFavorite(int $movieId, SessionInterface $session): Response
     {
@@ -89,23 +50,44 @@ class MovieController extends AbstractController
         // echo $movieId;die();
     }
 
-    // TODO ajouter une route removeFromFavorite qui retire des favoris et redirige vers la page des favoris
+    // TODO faire une route removeFromFavorite qui retire tous les favoris et redirige vers la page des favoris
+    
+    /**
+     * @Route("/favorites/remove/{movieId}", name="movie_remove_favorite", requirements={"movieId"="\d+"}, methods={"GET"})
+     */
+    public function removeFavorite(int $movieId, SessionInterface $session): Response
+    {
+        // récupérer le tableau des favoris
+        $currentFavorites = $session->get('favorite_list', []);
+
+        // supprimer le film demandé du tableau
+        unset($currentFavorites[$movieId]);
+
+        // re-enregistrer le tableau des favoris dans la session
+        $session->set('favorite_list', $currentFavorites);
+
+        $this->addFlash('success', 'Film retiré des favoris avec succès');
+        
+        // rediriger vers la page des favoris
+        return $this->redirectToRoute('movie_favorite');
+
+    }
 
     /**
      * @Route("/favorites", name="movie_favorite")
      */
-    public function favorite(SessionInterface $session): Response
+    public function favorite(SessionInterface $session, MovieRepository $movieRepository): Response
     {
         // récupérer les movies qui sont en session
         $favoriteMovieIds = $session->get('favorite_list', []);
-        $favoriteMoviesComplete = [];
+        $favoriteMoviesComplete = "";
 
         foreach ($favoriteMovieIds as $movieId)
         {
-            $favoriteMoviesComplete[$movieId] = ShowModel::getShow($movieId);
+            $favoriteMoviesComplete = $movieRepository->find($movieId);
         }
         
-        // var_dump($favoriteMoviesComplete); die();
+         //var_dump($favoriteMoviesComplete); die();
 
         return $this->render('movie/favorite.html.twig', [
             'show_list' => $favoriteMoviesComplete,
@@ -114,18 +96,14 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/films/{id}", name="movie_show", requirements={"id"="\d+"}, methods={"GET"})
-     * 
      */
-    public function show(int $id,  MovieRepository $movierepositary): Response
+    public function show(int $id, MovieRepository $movieRepository): Response
     {
-      // $movie = $movierepositary->find($id);
-       
-       //$casting = $castingrepository->find(2);
-       
+        // préparation des données
+        // require_once __DIR__ . '/../../sources/data.php';
 
-        //$movie = ShowModel::getShow($movieId);
-
-        $movie = $movierepositary->findOneWithAllData($id);
+        // $movie = ShowModel::getShow($movieId);
+        $movie = $movieRepository->findOneWithAllData($id);
 
         
 
@@ -141,7 +119,6 @@ class MovieController extends AbstractController
             'movie' => $movie,
             'movie_id' => $movie->getId(),
         ]);
-       // dd($person);
 
         // gestion avec une Exception
         // try {
