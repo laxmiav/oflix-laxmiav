@@ -120,7 +120,7 @@ class MovieController extends AbstractController
     public function show(int $id,  MovieRepository $movierepositary,PersonRepository $personrepository): Response
     {
        $movie = $movierepositary->find($id);
-       $castingid = $movie->getCasting();
+       $castingid = $movie->getCastings();
        $personid = $personrepository->find($castingid);
        //$casting = $castingrepository->find(2);
        

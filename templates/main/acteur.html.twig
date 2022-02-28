@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du acteur{% endblock %}
+
+{% block body %}
+{% for acteur in show_acteur %}
+{{acteur.people.firstname}}
+{{acteur.people.lastname}}
+
+
+
+{% endfor %}
+
+{% endblock %}

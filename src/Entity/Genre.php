@@ -25,18 +25,7 @@ class Genre
     private $name;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Movie::class, inversedBy="genres")
-     * @ORM\JoinTable(name="movie_genre")
+     * @ORM\ManyToMany(targetEntity=movie::class, inversedBy="genres")
      */
     private $movies;
 
@@ -62,53 +51,26 @@ class Genre
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Movie>
+     * @return Collection<int, movie>
      */
     public function getMovies(): Collection
     {
         return $this->movies;
     }
 
-    public function addMovie(Movie $movie): self
+    public function addMovie(movie $movie): self
     {
         if (!$this->movies->contains($movie)) {
             $this->movies[] = $movie;
-            $movie->addGenre($this);
         }
 
         return $this;
     }
 
-    public function removeMovie(Movie $movie): self
+    public function removeMovie(movie $movie): self
     {
-        if ($this->movies->removeElement($movie)) {
-            $movie->removeGenre($this);
-        }
+        $this->movies->removeElement($movie);
 
         return $this;
     }

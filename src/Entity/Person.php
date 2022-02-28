@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass=PersonRepository::class)
@@ -20,56 +23,79 @@ class Person
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstname;
+    private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $lastname;
+    private $lastName;
 
     /**
-     * @ORM\ManyToOne(targetEntity=casting::class, inversedBy="people")
+     * @ORM\OneToMany(targetEntity=casting::class, mappedBy="person")
      * 
      */
     private $casting;
+
+    public function __construct()
+    {
+        $this->casting = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setFirstName(string $firstName): self
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastname(?string $lastname): self
+    public function setLastName(string $lastName): self
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
-    public function getCasting(): ?casting
+    /**
+     * @return Collection<int, casting>
+     */
+    public function getCasting(): Collection
     {
         return $this->casting;
     }
 
-    public function setCasting(?casting $casting): self
+    public function addCasting(casting $casting): self
     {
-        $this->casting = $casting;
+        if (!$this->casting->contains($casting)) {
+            $this->casting[] = $casting;
+            $casting->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCasting(casting $casting): self
+    {
+        if ($this->casting->removeElement($casting)) {
+            // set the owning side to null (unless already changed)
+            if ($casting->getPerson() === $this) {
+                $casting->setPerson(null);
+            }
+        }
 
         return $this;
     }

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CastingRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,26 +23,23 @@ class Casting
     private $role;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $creditOrder;
+    private $credit_order;
 
     /**
-     * @ORM\OneToMany(targetEntity=movie::class, mappedBy="casting")
+     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="casting")
+     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Jointable(name= "person")
      */
-    private $movies;
+    private $person;
 
     /**
-     * @ORM\OneToMany(targetEntity=Person::class, mappedBy="casting")
-     * 
+     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="castings")
+     * @ORM\Jointable(name= "movie")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $people;
-
-    public function __construct()
-    {
-        $this->movies = new ArrayCollection();
-        $this->people = new ArrayCollection();
-    }
+    private $movie;
 
     public function getId(): ?int
     {
@@ -65,72 +60,36 @@ class Casting
 
     public function getCreditOrder(): ?int
     {
-        return $this->creditOrder;
+        return $this->credit_order;
     }
 
-    public function setCreditOrder(int $creditOrder): self
+    public function setCreditOrder(?int $credit_order): self
     {
-        $this->creditOrder = $creditOrder;
+        $this->credit_order = $credit_order;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, movie>
-     */
-    public function getMovies(): Collection
+    public function getPerson(): ?Person
     {
-        return $this->movies;
+        return $this->person;
     }
 
-    public function addMovie(movie $movie): self
+    public function setPerson(?Person $person): self
     {
-        if (!$this->movies->contains($movie)) {
-            $this->movies[] = $movie;
-            $movie->setCasting($this);
-        }
+        $this->person = $person;
 
         return $this;
     }
 
-    public function removeMovie(movie $movie): self
+    public function getMovie(): ?Movie
     {
-        if ($this->movies->removeElement($movie)) {
-            // set the owning side to null (unless already changed)
-            if ($movie->getCasting() === $this) {
-                $movie->setCasting(null);
-            }
-        }
-
-        return $this;
+        return $this->movie;
     }
 
-    /**
-     * @return Collection<int, Person>
-     */
-    public function getPeople(): Collection
+    public function setMovie(?Movie $movie): self
     {
-        return $this->people;
-    }
-
-    public function addPerson(Person $person): self
-    {
-        if (!$this->people->contains($person)) {
-            $this->people[] = $person;
-            $person->setCasting($this);
-        }
-
-        return $this;
-    }
-
-    public function removePerson(Person $person): self
-    {
-        if ($this->people->removeElement($person)) {
-            // set the owning side to null (unless already changed)
-            if ($person->getCasting() === $this) {
-                $person->setCasting(null);
-            }
-        }
+        $this->movie = $movie;
 
         return $this;
     }

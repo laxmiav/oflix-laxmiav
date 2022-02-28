@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
  */
@@ -31,22 +30,22 @@ class Movie
     private $title;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $releaseDate;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="date")
+     */
+    private $releaseDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $summary;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $synopsis;
 
@@ -61,21 +60,31 @@ class Movie
     private $rating;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movies" )
-     * @ORM\JoinTable(name="movie_genre")
+     * @ORM\Column(type="date", nullable=true)
      */
-     private $genres;
+    private $created_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Casting::class, inversedBy="movies")
-     * 
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $casting;
+    private $updated_at;
 
-    // public function __construct()
-    // {
-    //     $this->genres = new ArrayCollection();
-    // }
+    /**
+     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movies")
+     */
+    private $genres;
+
+    /**
+     * @ORM\OneToMany(targetEntity=casting::class, mappedBy="movie")
+     * @ORM\jointable(name= "casting")
+     */
+    private $castings;
+
+    public function __construct()
+    {
+        $this->genres = new ArrayCollection();
+        $this->castings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,18 +115,6 @@ class Movie
         return $this;
     }
 
-    public function getReleaseDate(): ?\DateTimeInterface
-    {
-        return $this->releaseDate;
-    }
-
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
-    {
-        $this->releaseDate = $releaseDate;
-
-        return $this;
-    }
-
     public function getDuration(): ?int
     {
         return $this->duration;
@@ -130,12 +127,24 @@ class Movie
         return $this;
     }
 
+    public function getReleaseDate(): ?\DateTimeInterface
+    {
+        return $this->releaseDate;
+    }
+
+    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    {
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
     public function getSummary(): ?string
     {
         return $this->summary;
     }
 
-    public function setSummary(string $summary): self
+    public function setSummary(?string $summary): self
     {
         $this->summary = $summary;
 
@@ -147,7 +156,7 @@ class Movie
         return $this->synopsis;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setSynopsis(?string $synopsis): self
     {
         $this->synopsis = $synopsis;
 
@@ -178,38 +187,83 @@ class Movie
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, genre>
+     * @return Collection<int, Genre>
      */
     public function getGenres(): Collection
     {
         return $this->genres;
     }
 
-    public function addGenre(genre $genre): self
+    public function addGenre(Genre $genre): self
     {
         if (!$this->genres->contains($genre)) {
             $this->genres[] = $genre;
+            $genre->addMovie($this);
         }
 
         return $this;
     }
 
-    public function removeGenre(genre $genre): self
+    public function removeGenre(Genre $genre): self
     {
-        $this->genres->removeElement($genre);
+        if ($this->genres->removeElement($genre)) {
+            $genre->removeMovie($this);
+        }
 
         return $this;
     }
 
-    public function getCasting(): ?Casting
+    /**
+     * @return Collection<int, casting>
+     */
+    public function getCastings(): Collection
     {
-        return $this->casting;
+        return $this->castings;
     }
 
-    public function setCasting(?Casting $casting): self
+    public function addCasting(casting $casting): self
     {
-        $this->casting = $casting;
+        if (!$this->castings->contains($casting)) {
+            $this->castings[] = $casting;
+            $casting->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCasting(casting $casting): self
+    {
+        if ($this->castings->removeElement($casting)) {
+            // set the owning side to null (unless already changed)
+            if ($casting->getMovie() === $this) {
+                $casting->setMovie(null);
+            }
+        }
 
         return $this;
     }

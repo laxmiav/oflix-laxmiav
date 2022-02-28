@@ -60,5 +60,24 @@ class MainController extends AbstractController {
         // redirige vers la page qui a appelé le switch
         return $this->redirect($request->headers->get('referer'));
     }
+     /**
+     * displays the homepage
+     *
+     * @return Response
+     * 
+     * @Route("/acter/{id}", name="acter")
+     */
+    public function showacter(int $id, MovieRepository $movierepositary ) :Response
+    {
+        // TODO trouver une solution objet
+        // préparation des données
+        // require_once __DIR__ . '/../../sources/data.php';
+        $showacter = $movierepositary->findOneWithPerson($id);
+
+        return $this->render('main/acter.html.twig', [
+            'show_acteur' => $showacter
+        ]);
+    }
+    
 
 }
