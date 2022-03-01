@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container">
-    <h1>Ajouter une critique sur le film</h1>
+    <h1>Ajouter une critique sur le film  {{movie.title}}</h1>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_row(form.username) }}
@@ -11,7 +11,7 @@
     {{ form_row(form.rating) }}
     {{ form_row(form.reactions) }}
     {{ form_row(form.watchedAt) }}
-    {{ form_row(form.movieName) }} 
+     {{ form_row(form.movieName,{'attr': {'placeholder': movie.title}}) }}  
     
     <button>Envoyer le message</button>
     {{ form_end(form) }}
@@ -20,5 +20,5 @@
 
 
 {% block title %}
-Page de contact
+Page de Review
 {% endblock %}

@@ -31,7 +31,7 @@ class FormController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupérer les données
-
+            
             // valider les données
 
             // traiter le formulaire
@@ -43,8 +43,8 @@ class FormController extends AbstractController
             return $this->redirectToRoute('movie_show');
         }
 
-        return $this->renderForm('form/review.html.twig',[
-            'form' => $form,'movie' => $movie
+        return $this->render('form/review.html.twig',[
+             'form' => $form->createView(),'movie' => $movie
         ]);
     }
 }
