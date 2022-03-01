@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Ajouter une critique sur le film</h1>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.rating) }}
+    {{ form_row(form.reactions) }}
+    {{ form_row(form.watchedAt) }}
+    {{ form_row(form.movieName) }} 
+    
+    <button>Envoyer le message</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+
+{% block title %}
+Page de contact
+{% endblock %}

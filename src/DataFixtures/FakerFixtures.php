@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\DataFixtures;
 
 use App\Entity\Casting;
@@ -9,9 +10,10 @@ use App\Entity\Person;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+
 use Faker\Factory;
 
-class RandomFixtures extends Fixture
+class FakerFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
