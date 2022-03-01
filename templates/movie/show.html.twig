@@ -19,7 +19,7 @@
 
                 <div class="col-8 p-4 d-flex flex-column position-static bg-light">
 
-                    {{ include('movie/_favorite_icon.html.twig', {movie.id : show.id} ) }}
+                    {{ include('movie/_favorite_icon.html.twig' ) }}
                     {# <a href="{{ path('movie_add_favorite', {"movieId": movie_id}) }}" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a> #}
                     <strong class="d-inline-block mb-2 text-primary">{{ movie.type }}</strong>
                     <h3 class="mb-1">{{ movie.title }}</h3>
