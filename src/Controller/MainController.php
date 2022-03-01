@@ -25,7 +25,7 @@ class MainController extends AbstractController {
         // TODO trouver une solution objet
         // préparation des données
         // require_once __DIR__ . '/../../sources/data.php';
-        $shows = $movierepositary->findall();
+        $shows = $movierepositary->findByMostRecentlyRelease(4);
 
         return $this->render('main/homepage.html.twig', [
             'show_list' => $shows

@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
@@ -66,6 +67,20 @@ class MovieRepository extends ServiceEntityRepository
 
     }
 
+    public function findAllOrderByTitle()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT m
+            FROM App\Entity\Movie m
+            ORDER BY m.title ASC
+            '
+        );
+
+        // returns the movie or null if not found
+        return $query->getResult();
+    }                               
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */
@@ -94,4 +109,53 @@ class MovieRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function findAllOrderByDateDescWithLimit($limit = 10) : ?array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT m
+            FROM App\Entity\Movie m
+            ORDER BY m.releaseDate DESC
+            '
+        );
+
+        $query->setMaxResults($limit);
+        // returns the movie or null if not found
+        return $query->getResult();
+    }
+
+   /**
+     *
+     * @param integer $limit
+     * @return void
+     */
+    public function findByMostRecentlyRelease($limit = 10)
+    {
+        $entityManager = $this->getEntityManager(); 
+
+        $query = $entityManager->createQuery(
+            'SELECT m, g, c, p
+            FROM App\Entity\Movie m
+            JOIN m.genres g
+            JOIN m.castings c
+            JOIN c.person p 
+            ORDER BY m.releaseDate DESC'
+        ); 
+        
+        $query->setMaxResults($limit);
+        //$query->setParameter('shows_list', $showsList);
+        
+        // returns the movies orderedBy Title
+        /* Attention si on fait des jointures, on obtient plusieurs lignes pour un meme film
+         * du coup le limit 2 par exemple n'aura que les informations du 1er film avec ses genres
+         * Le paginator permet de pallier à ce problème \o/ Merci @Julien L
+        */
+        return new Paginator($query);
+
+    }
+
+
 }

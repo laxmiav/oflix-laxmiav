@@ -84,7 +84,7 @@ class MovieController extends AbstractController
 
         foreach ($favoriteMovieIds as $movieId)
         {
-            $favoriteMoviesComplete = $movieRepository->find($movieId);
+            $favoriteMoviesComplete[$movieId] = $movieRepository->find($movieId);
         }
         
          //var_dump($favoriteMoviesComplete); die();
@@ -133,6 +133,22 @@ class MovieController extends AbstractController
         // return $this->render('movie/show.html.twig', [
         //     'movie' => $movie,
         // ]);
+    }
+      /**
+     * @Route("/films", name="movie_list", methods={"GET"})
+     */
+    public function list(MovieRepository $movieRepository): Response
+    {
+        // préparation des données 
+
+        // récupérer la liste des films
+        //$allMovies = $movieRepository->findAll();
+        //$allMovies = $movieRepository->findBy([], ['title' => 'ASC']);
+        $allMovies = $movieRepository->findAllOrderByTitle();
+        // fournir les données à la view
+        return $this->render('movie/list.html.twig', [
+            'movie_list' => $allMovies,
+        ]);
     }
 
 }
