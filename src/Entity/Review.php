@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReviewRepository::class)
@@ -19,16 +20,21 @@ class Review
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message = "Merci de saisir un pseudo")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email
      */
     private $email;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 50, minMessage = "Il faut au minimum {{ limit }} caractères")
      */
     private $content;
 
@@ -48,7 +54,7 @@ class Review
     private $watchedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Movie::class,inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="reviews")
      */
     private $movie;
 
