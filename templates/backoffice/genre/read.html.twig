@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Détail du Genre
+    
+{% endblock %}
+
+{% block body %}
+
+    <div class="container bg-lighttt pt-5">
+
+        <div class="d-flex justify-content-around mb-4">
+
+            <a href="{{ path('backoffice_movie_list') }}" class="btn btn-success float-end">
+                Retour
+                            
+            </a>
+            <a class="btn btn-success float-end" href="{{ path('backoffice_movie_edit',{id : casting.id}) }}">
+                Modify
+                            
+            </a>
+
+        </div>
+
+        <div class="row mb-2">
+
+            <div class="col">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row align-items-start mb-4 shadow-smmm position-relative">
+
+                    <div class="col-8 p-4 d-flex flex-column position-static bg-light">
+
+                        <dl class="row">
+                            <dt class="col-sm-12">
+                                Genre Details
+                                                            
+                            </dt>
+                            <dd class="col-sm-12">
+
+                                <div class="container">
+                                    <h1>
+                                        {{ genre.name }}
+                                    </h1>
+
+                                    <h2>
+                                        5 Films de ce genre
+                                                                            
+                                    </h2>
+
+                                    <ul>
+                                        {% for movie in genre.movies|slice(0, 5) %}
+                                            <li>
+                                                {{ movie.title }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </dd>
+
+                        </dl>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

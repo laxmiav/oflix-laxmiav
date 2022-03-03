@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CastingRepository;
+use App\Repository\MovieRepository ;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Genre;
@@ -45,7 +46,7 @@ class castingController extends AbstractController
     {
        
 
-        // $casting = ShowModel::getShow($castingId);
+        
         $casting = $castingRepository->find($id);
 
         
@@ -68,16 +69,16 @@ class castingController extends AbstractController
      /**
      * @Route("/backoffice/casting/{id}/edit", name="backoffice_casting_edit", requirements={"id"="\d+"}, methods={"GET","POST"})
      */
-    public function edit(int $id, castingRepository $castingRepository,ManagerRegistry $doctrine,Request $request): Response
+    public function edit(int $id, MovieRepository $movieRepository, castingRepository $castingRepository,ManagerRegistry $doctrine,Request $request): Response
     {
        
 
       
         $casting = $castingRepository->find($id);
         //$casting = new casting();
-       
+        $movie = $movieRepository->findOneWithAllData($id);
         // préparation des données
-       
+        $person = $casting->getPerson();
         $form = $this->createForm(CastingType::class, $casting);
         
         //dd($form);
@@ -85,7 +86,8 @@ class castingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupérer les données
-           
+           $casting-> setMovie($movie);
+           $casting-> setPerson($person);
             // valider les données
        
              $entityManager = $doctrine->getManager();

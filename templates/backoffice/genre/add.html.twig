@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Ajouter un Genre</h1>
+
+  
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button class="btn btn-primary">Ajouter</button>
+{{ form_end(form) }}
+
+   
+     {# {{ form_row(form.movieName,{'attr': {'placeholder': movie.title}}) }}   #}
+    
+   
+</div>
+{% endblock %}
+
+
+{% block title %}
+Add a casting
+{% endblock %}

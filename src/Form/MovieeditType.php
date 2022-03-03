@@ -50,7 +50,7 @@ class MovieeditType extends AbstractType
              'choice_label' => 'name',
             'expanded' => true,
             'multiple' => true,
-         'choice_value' => 'id'
+             'choice_value' => 'id'
              ])
         ;
     }
