@@ -6,7 +6,6 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Jointable;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -71,7 +70,8 @@ class Movie
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movies",cascade={"all"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies",cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinTable(name="genre_movie")
      */
     private $genres;
 

@@ -32,13 +32,13 @@ class MovieeditType extends AbstractType
             ])
             ->add('releaseDate')
             ->add('summary', TextareaType::class, [
-                'label' => 'Critique',
+                'label' => 'Summary',
             ])
             ->add('synopsis', TextareaType::class, [
-                'label' => 'Critique',
+                'label' => 'synopsis',
             ])
-            ->add('poster', TextareaType::class, [
-                'label' => 'Critique',
+            ->add('poster', TextType::class, [
+                'label' => 'poster',
             ])
             ->add('rating',IntegerType::class, [
                 'label' => 'rating',
@@ -50,7 +50,7 @@ class MovieeditType extends AbstractType
              'choice_label' => 'name',
             'expanded' => true,
             'multiple' => true,
-            // 'choice_value' => 'id'
+         'choice_value' => 'id'
              ])
         ;
     }

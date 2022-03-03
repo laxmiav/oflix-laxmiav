@@ -55,9 +55,9 @@ class MovieRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT m, g, c, p
             FROM App\Entity\Movie m
-            JOIN m.genres g
-            JOIN m.castings c
-            JOIN c.person p 
+            LEFT JOIN m.genres g
+            LEFT JOIN m.castings c
+            LEFT JOIN c.person p 
             WHERE m.id = :id'
         );
         $query->setParameter('id', $movieId);

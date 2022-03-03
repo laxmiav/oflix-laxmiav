@@ -4,35 +4,33 @@
 
 {% block body %}
   <div class="container my-4">
-        <a href="{{path('backoffice_movie_add')}}" class="btn btn-success float-end">Ajouter</a>
-        <h2>Liste des Movies</h2>
+        <a href="{{path('backoffice_casting_add')}}" class="btn btn-success float-end">Ajouter</a>
+        <h2>Liste des Castings</h2>
         <table class="table table-hover mt-4">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Duration</th>
-                    
+                    <th scope="col">role</th>
+                    <th scope="col">credit-order</th>
+                   
                      <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-              {% for movie in movies %}  
+              {% for casting in castings %}  
                 <tr>
-                    <th scope="row">{{movie.id}}</th>
-                    <td>{{movie.title}}</td>
-                    <td>{{movie.type}}</td>
-                    <td>{{movie.duration}}</td>
-                   
+                    <th scope="row">{{casting.id}}</th>
+                    <td>{{casting.role}}</td>
+                    <td>{{casting.creditOrder}}</td>
+                    
                     <td class="text-end">
-                        <a href="{{path('backoffice_movie_read',{id:movie.id})}}" class="btn btn-sm btn-warning">
+                        <a href="{{path('backoffice_casting_read',{id:casting.id})}}" class="btn btn-sm btn-warning">
                             <i class="fa fa-pencil-square-o" aria-hidden="true">Detail</i>
                         </a>
-                        <a href="{{path('backoffice_movie_edit',{id:movie.id})}}" class="btn btn-sm btn-warning">
+                        <a href="{{path('backoffice_casting_edit',{id:casting.id})}}" class="btn btn-sm btn-warning">
                             <i class="fa fa-pencil-square-o" aria-hidden="true">Update</i>
                         </a>
-                         <a href="{{path('backoffice_movie_delete',{id:movie.id})}}" class="btn btn-sm btn-danger">
+                         <a href="{{path('backoffice_casting_delete',{id:casting.id})}}" class="btn btn-sm btn-danger">
                             <i class="fa fa-pencil-square-o" aria-hidden="true">delete</i>
                         </a>
                         <!-- Example single danger button -->

@@ -71,7 +71,7 @@ class MovieController extends AbstractController
        
         $form = $this->createForm(MovieeditType::class, $movie);
         
-//dd($form);
+        //dd($form);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -80,25 +80,8 @@ class MovieController extends AbstractController
             $updateDate = new \DateTime();
             $movie->setUpdatedAt($updateDate);
             // valider les données
-           
-        //   foreach ($form->get('genres')->getData() as $genres){
-        //     //$movie->addGenre($genres);
-        //     $entityManager = $doctrine->getManager();
-        //     // $entityManager->persist($movie);
-           
-        //     // $genre->setName($genres);
-        //     $genre[$genres] = new Genre();
-        //     $genre = $genres;
-        //     $movie->addGenre($genre);
-
-        //      $entityManager->persist($movie);
-        //   }
-        
-         // dd($a);
-         // $movie->addGenre($genres);
-            // traiter le formulaire
-              // dire à doctrine de gérer l'objet review
-              $entityManager = $doctrine->getManager();
+       
+             $entityManager = $doctrine->getManager();
              $entityManager->flush();
             
            // dd( $movie);
@@ -137,6 +120,42 @@ class MovieController extends AbstractController
 
         // redirection
         return $this->redirectToRoute('backoffice_movie_list');
+    }
+    
+
+     /**
+     * displays the review
+     *
+     * @return Response
+     * 
+     * @Route("/backoffice/movie/add", name="backoffice_movie_add", methods={"GET", "POST"})
+     */
+    public function add(Request $request,MovieRepository $movieRepository,ManagerRegistry $doctrine) :Response
+    {
+        // préparation des données
+        $movie = new Movie();
+        $form = $this->createForm(MovieeditType::class, $movie);
+       
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $created = new \DateTime();
+            $movie->setCreatedAt($created);
+           
+               
+                $entityManager = $doctrine->getManager();  
+               $entityManager->persist($movie);
+           
+               // dire à doctrine d'exécuter les requêtes
+              $entityManager->flush();
+            
+   
+           
+             return $this->redirectToRoute('backoffice_movie_list');
+        }
+
+        return $this->render('backoffice/movie/add.html.twig',[
+             'form' => $form->createView(),
+        ]);
     }
 
 

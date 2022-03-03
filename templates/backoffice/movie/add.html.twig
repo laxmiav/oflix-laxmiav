@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Ajouter un Movie</h1>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    
+    {{ form_row(form.type) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.duration) }}
+    {{ form_row(form.releaseDate) }}
+    {{ form_row(form.summary) }}
+    {{ form_row(form.synopsis) }}
+    {{ form_row(form.poster) }}
+    {{ form_row(form.rating) }}
+    {{ form_row(form.genres) }}
+  <button class="btn btn-success " >Add</button>
+    {{ form_end(form) }}
+   
+     {# {{ form_row(form.movieName,{'attr': {'placeholder': movie.title}}) }}   #}
+    
+   
+</div>
+{% endblock %}
+
+
+{% block title %}
+Add a movie
+{% endblock %}
