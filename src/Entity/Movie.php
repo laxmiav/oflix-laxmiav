@@ -71,17 +71,17 @@ class Movie
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movies")
+     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movies",cascade={"all"}, orphanRemoval=true)
      */
     private $genres;
 
     /**
-     * @ORM\OneToMany(targetEntity="Casting", mappedBy="movie")
+     * @ORM\OneToMany(targetEntity="Casting", mappedBy="movie",cascade={"all"}, orphanRemoval=true)
      * 
      */
     private $castings;
      /**
-     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie")
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie",cascade={"all"}, orphanRemoval=true)
      */
     private $reviews;
 

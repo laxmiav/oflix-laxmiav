@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du film{% endblock %}
+
+{% block body %}
+
+<div class="container bg-lighttt pt-5">
+
+                 <div class="d-flex justify-content-around mb-4" >
+                
+                        <a href="{{path('backoffice_movie_list')}}" class="btn btn-success float-end">Retour</a>
+                        <a  class="btn btn-success float-end" href="{{path('backoffice_movie_edit',{id : movie.id})}}">Modify</a>
+                   
+                </div>
+
+    <div class="row mb-2">
+
+        <div class="col">
+            <div
+                class="row g-0 border rounded overflow-hidden flex-md-row align-items-start mb-4 shadow-smmm position-relative">
+                <div class="col-4 movie__poster img-thumbnail"
+                    style="background-image: url({{ movie.poster }});">
+                    <img src="{{ asset('images/poster-placeholder.png') }}" class="img-fluid">
+                    <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
+                </div>
+
+                <div class="col-8 p-4 d-flex flex-column position-static bg-light">
+                   
+                    <strong class="d-inline-block mb-2 text-primary">{{ movie.type }}</strong>
+                    <h3 class="mb-1">{{ movie.title }}</h3>
+                    <div class="mb-1 text-muted">{{ movie.duration }} min</div>
+                    <p>
+                    {% for genre in  movie.genres %}
+                        <span class="badge bg-warning text-dark">{{genre.name}}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ movie.synopsis }}
+                          
+                    </p>
+                    <p>
+                        {{ movie.summary }}
+                    </p>
+                    <div class="d-flex mb-4" style="color: orange;">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        <span class="ps-1">{{ movie.rating }}</span>
+                    </div>
+
+                    {# <h2>3 Saisons</h2>
+                    <ul class="list-unstyled">
+                        <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
+                        <li><span class="badge bg-danger fs-6 mb-2">Saison 2</span><small class="ms-1">(11 épisodes)</small></li>
+                        <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li>
+                    </ul> #}
+
+                    <dl class="row">
+                        <dt class="col-sm-12">Avec</dt>
+                        <dd class="col-sm-12">
+                         {% for persons in movie.castings %}
+                      
+                            Acteur: {{ persons.person.firstName }} role: {{ persons.role }}<br>
+                            
+                            {# Acteur 2 (La reine)<br>
+                            Acteur 3 (Franz)<br> #}
+                             {% endfor %} 
+                        </dd>
+                        <dt class="col-sm-12">Pays</dt>
+                        <dd class="col-sm-12">USA</dd>
+                        <dt class="col-sm-12">Année</dt>
+                        <dd class="col-sm-12">{{ movie.releaseDate|date('Y') }}</dd>
+                    </dl>
+
+                     <h2>Critiques des utilisateurs</h2>
+
+                        <dl class="row">
+                            <dt class="col-sm-12">Critiques</dt>
+                            {% for review in movie.reviews %}
+                            <dd class="col-sm-12 border border-info">
+                                <p class=""> Pseudo :{{ review.username }} </p>
+                                E-mail :{{ review.email }} <br>
+                                Critique :{{ review.content }} <br>
+                                Note :{{ review.rating }} <br>
+                                Reactions :
+                                {% for reaction in review.reactions %}
+                                    {{ reaction }}, 
+                                {% endfor %}
+                                <br>
+                                Vu le :{{ review.watchedAt|date('Y-m-d') }} <br>
+                            </dd>
+                            {% endfor %}
+                        </dl>
+
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+   
+
+</div>
+{% endblock %}

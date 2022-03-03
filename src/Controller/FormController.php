@@ -27,7 +27,7 @@ class FormController extends AbstractController
         $review = new Review();
         $form = $this->createForm(ReviewType::class, $review);
         $movie = $movieRepository->findOneWithAllData($id);
-//dd($form);
+  //dd($form);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -43,7 +43,7 @@ class FormController extends AbstractController
               // dire à doctrine d'exécuter les requêtes
               $entityManager->flush();
             
-dd( $review);
+   //dd( $review);
             // // ajouter un flash message (facultatif)
             // $this->addFlash('success', 'Votre review a bien été envoyé');
             // // rediriger
