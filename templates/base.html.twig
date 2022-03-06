@@ -32,11 +32,13 @@
                  {% else %}
                 {% include('main/_nav_front.html.twig') %}
                  {% endif %}
+
+                {% if app.user %}  
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            <span>Charles</span>
+                            <span>{{ app.user.username }}</span>
                             <i class="bi bi-person-square"></i>
                         </a>
                         <ul class="dropdown-menu">
@@ -49,9 +51,9 @@
                         </ul>
                     </li>
                 </ul>
-
-                <button type="button" class="btn btn-danger me-2">Connexion</button>
-
+ {% else %}
+                <button type="button" class="btn btn-danger me-2" ><a href="{{path('app_login')}}" > Connexion </a></button>
+ {% endif %}
                 <form class="d-flex" action="list.html">
                     <input class="form-control form-control-sm me-2" name="search" type="search" placeholder="Rechercher...">
                     <button class="btn btn-outline-danger" type="submit"><i class="bi bi-search"></i></button>
