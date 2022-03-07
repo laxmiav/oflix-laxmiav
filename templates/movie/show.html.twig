@@ -93,7 +93,9 @@
                 <div class="d-flex mb-4" >
                 <button class="btn-primary">
                 
-                        <a style="color:black" href="{{path('review',{id : movie.id})}}">Ajouter une critique</a>
+                        {% if is_granted('REVIEW_ADD') %}
+                    <a href="{{ path('movie_add_review', {id : movie.id}) }}" class="btn btn-secondary">Ajouter une critique</a>
+                    {% endif %}
                    
                 </button></div>
             </div>
