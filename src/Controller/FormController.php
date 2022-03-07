@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class FormController extends AbstractController
 {
@@ -20,9 +21,12 @@ class FormController extends AbstractController
      * @return Response
      * 
      * @Route("/review/{id}", name="review", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function review(int $id,Request $request,MovieRepository $movieRepository,ManagerRegistry $doctrine) :Response
     {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
         // préparation des données
         $review = new Review();
         $form = $this->createForm(ReviewType::class, $review);

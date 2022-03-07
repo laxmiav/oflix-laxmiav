@@ -7,6 +7,7 @@ use App\Entity\Casting;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -112,6 +113,27 @@ class FakerFixtures extends Fixture
             // dire à Doctrine de gérer le nouvel objet
             $manager->persist($movie);
         }
+
+        $user = new User();
+        $user->setEmail('admin@admin.com');
+        // password is admin
+        $user->setPassword('$2y$13$FBvw1Kh9IO9jFSFOxE1vD.Fk0avi1mLnt0MXGS2gAEAmoeUCj2XoS');
+        $user->setRoles(['ROLE_ADMIN']);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setEmail('manager@manager.com');
+        // password is manager
+        $user->setPassword('$2y$13$spQFGrDmbnqFBF.HIKWQueqP0hYoUEDWvMKwx9Dd2VlbLj5G9XktO');
+        $user->setRoles(['ROLE_MANAGER']);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setEmail('user@user.com');
+        // password is user
+        $user->setPassword('$2y$13$Q4jpOKImtja0WRY4rUSjEOcyjFZh5DqLTkpuOJWnh8XoMBPbHdlZC');
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
 
         $manager->flush();
     }

@@ -35,10 +35,27 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin/login/add /edit /delete, roles: ROLE_ADMIN }
-         - { path: ^/login/homepage/flims/favoris/rewiew, roles: ROLE_USER }
-         - { path: ^/login/backoffice, roles: ROLE_MANAGER }
-         - { path: ^/homepage/flims/favoris/login, roles: PUBLIC_ACCESS }
+          # Sécuriser toutes les routes du backoffice /add /edit /delete pour les admin
+        - { path: ^/backoffice/.*/(edit|add|delete), roles: ROLE_ADMIN }
+        # Sécurise les pages de listes et show du backoffice pour les managers
+        #    on met la regex entre "" car elle contient une , qui est un caractère particulier en YAML
+        #    on met \\d car le 1er \ sert à dire à YAML que le 2eme \ est le caractère que l'on veut saisir
+        - { path: "^/backoffice/[^/]*/\\d{0,}$", roles: ROLE_MANAGER }
+        # Il faut etre connecté pour ajouter une review
+        - { path: "^/films/[^/]*/reviews/add", roles: ROLE_USER }
+        # Tout le monde peut accéder à la page d'accueil et la page de détail d'un movie
+        # - { path: ^/$, roles: ROLE_ANONYMOUS }
+        # ou en plusieurs règles :
+        # - { path: ^/backoffice/(genres|movies)/.*/edit, roles: ROLE_ADMIN }
+        # - { path: ^/backoffice/(genres|movies)/.*/delete, roles: ROLE_ADMIN }
+        # - { path: ^/backoffice/(genres|movies)/add, roles: ROLE_ADMIN }
+
+
+        # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN:   ROLE_MANAGER
+       # ROLE_MANAGER: ROLE_USER
+        
 
 when@test:
     security:
