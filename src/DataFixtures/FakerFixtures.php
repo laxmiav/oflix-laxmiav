@@ -12,15 +12,36 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 use Faker\Factory;
 
 class FakerFixtures extends Fixture
 {
+
+
+
+    private $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+
+
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
         $faker->seed(806);
         // préparer les données
+
+
+      
+        
+
+
 
         // créer une liste de genre et les stocker dans un tableau
         $genres = [
