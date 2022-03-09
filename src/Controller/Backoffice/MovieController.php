@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Form\MovieeditType;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MovieController extends AbstractController
 {
@@ -58,7 +59,7 @@ class MovieController extends AbstractController
      /**
      * @Route("/backoffice/movie/{id}/edit", name="backoffice_movie_edit", requirements={"id"="\d+"}, methods={"GET","POST"})
      */
-    public function edit(int $id, MovieRepository $movieRepository,ManagerRegistry $doctrine,Request $request): Response
+    public function edit(int $id, MovieRepository $movieRepository,ManagerRegistry $doctrine,Request $request,SluggerInterface $slugger): Response
     {
        
 
@@ -80,7 +81,8 @@ class MovieController extends AbstractController
             $updateDate = new \DateTime();
             $movie->setUpdatedAt($updateDate);
             // valider les données
-       
+            $movie->setSlug($slugger->slug(strtolower($movie->getTitle())));
+
              $entityManager = $doctrine->getManager();
              $entityManager->flush();
             
@@ -130,7 +132,7 @@ class MovieController extends AbstractController
      * 
      * @Route("/backoffice/movie/add", name="backoffice_movie_add", methods={"GET", "POST"})
      */
-    public function add(Request $request,MovieRepository $movieRepository,ManagerRegistry $doctrine) :Response
+    public function add(Request $request,MovieRepository $movieRepository,ManagerRegistry $doctrine,SluggerInterface $slugger) :Response
     {
         // préparation des données
         $movie = new Movie();
@@ -140,7 +142,7 @@ class MovieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) { 
             $created = new \DateTime();
             $movie->setCreatedAt($created);
-           
+            $movie->setSlug($slugger->slug(strtolower($movie->getTitle())));
                
                 $entityManager = $doctrine->getManager();  
                $entityManager->persist($movie);

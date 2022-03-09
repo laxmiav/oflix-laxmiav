@@ -13,6 +13,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Type</th>
                     <th scope="col">Duration</th>
+                    <th scope="col">slug</th>
                     
                      <th scope="col"></th>
                 </tr>
@@ -24,6 +25,7 @@
                     <td>{{movie.title}}</td>
                     <td>{{movie.type}}</td>
                     <td>{{movie.duration}}</td>
+                    <td>{{movie.slug}}</td>
                    
                     <td class="text-end">
                         <a href="{{path('backoffice_movie_read',{id:movie.id})}}" class="btn btn-sm btn-warning">
