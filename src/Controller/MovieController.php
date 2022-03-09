@@ -100,11 +100,11 @@ class MovieController extends AbstractController
      * @Route("/films/{slug}", name="movie_show", methods={"GET"})
      * 
      */
-    public function show( Movie $movie, MovieRepository $movieRepository): Response
+    public function show( Movie $movie, MovieRepository $movieRepository,$mySlugger): Response
     {
         
        // $movie = $movieRepository->findOneWithAllData($slug);
-
+dump($mySlugger);
         
 
         // on vérifie si l'identifiant existe dans le tableau
