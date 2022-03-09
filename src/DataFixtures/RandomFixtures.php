@@ -9,9 +9,23 @@ use App\Entity\Person;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RandomFixtures extends Fixture
+
 {
+
+
+    protected $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+
+
+
     public function load(ObjectManager $manager): void
     {
         // préparer les données
@@ -48,7 +62,7 @@ class RandomFixtures extends Fixture
         }
 
         // créer une liste de personne et les stocker dans un tableau
-        $nbActeurs = 50;
+        $nbActeurs = 20;
         $personObjects = [];
         for ($i = 0; $i < $nbActeurs; $i++) {
             $person = new Person();
@@ -62,7 +76,7 @@ class RandomFixtures extends Fixture
         // créer une liste de movie 
         // pour chaque movie piocher un nombre de genre aléatoire à associer
         // pour chaque movie piocher un nombre de personnes aléatoire pour créer des castings
-        $nbMovie = 20;
+        $nbMovie = 10;
 
         $types =[
             'movie',
@@ -80,6 +94,7 @@ class RandomFixtures extends Fixture
             $movie->setRating(3.2);
             $movie->setPoster('https://picsum.photos/id/' . ( $movieCount + 1 ) . '/200/300');
             $movie->setReleaseDate(new DateTime());
+            $movie->setSlug(strtolower($this->slugger->slug($movie->getTitle())));
 
             // ajouter les associations avec Genre
             for ($i = 0; $i <= rand(1, 5) ; $i++)

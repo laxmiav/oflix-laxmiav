@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends AbstractController
@@ -96,15 +97,13 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/films/{id}", name="movie_show", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/films/{slug}", name="movie_show", methods={"GET"})
+     * 
      */
-    public function show(int $id, MovieRepository $movieRepository): Response
+    public function show( Movie $movie, MovieRepository $movieRepository): Response
     {
-        // préparation des données
-        // require_once __DIR__ . '/../../sources/data.php';
-
-        // $movie = ShowModel::getShow($movieId);
-        $movie = $movieRepository->findOneWithAllData($id);
+        
+       // $movie = $movieRepository->findOneWithAllData($slug);
 
         
 
@@ -121,19 +120,7 @@ class MovieController extends AbstractController
             'movie_id' => $movie->getId(),
         ]);
 
-        // gestion avec une Exception
-        // try {
-        //     $movie = ShowModel::getShow($movieId);
-        // }
-        // catch (Exception $e)
-        // {
-        //     // on jette une exception lorsque l'on rencontre une erreur
-        //     // mais que l'on ne veut pas la gérer
-        //     throw $this->createNotFoundException('The show does not exist');
-        // }
-        // return $this->render('movie/show.html.twig', [
-        //     'movie' => $movie,
-        // ]);
+        
     }
       /**
      * @Route("/films", name="movie_list", methods={"GET"})

@@ -21,7 +21,7 @@ class FakerFixtures extends Fixture
 
 
 
-    private $slugger;
+    protected $slugger;
 
     public function __construct(SluggerInterface $slugger)
     {
@@ -107,6 +107,7 @@ class FakerFixtures extends Fixture
             $movie->setRating($faker->randomFloat(1, 0, 5));
             $movie->setPoster('https://picsum.photos/id/' . ( $movieCount + 1 ) . '/200/300');
             $movie->setReleaseDate(new DateTime());
+            $movie->setSlug(strtolower($this->slugger->slug($movie->getTitle())));
 
             // ajouter les associations avec Genre
             for ($i = 0; $i <= rand(1, 5) ; $i++)

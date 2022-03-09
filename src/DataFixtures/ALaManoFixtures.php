@@ -10,9 +10,21 @@ use App\Repository\CastingRepository;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ALaManoFixtures extends Fixture
 {
+    protected $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+
+
+
+
     public function load(ObjectManager $manager): void
     {
         $fightClub = [
@@ -175,6 +187,7 @@ class ALaManoFixtures extends Fixture
             $movie->setRating($currentMovie['rating']);
             $movie->setPoster($currentMovie['poster']);
             $movie->setReleaseDate(new DateTime($currentMovie['releaseDate']));
+            $movie->setSlug(strtolower($this->slugger->slug($movie->getTitle())));
 
             // dire à Doctrine de gérer le nouvel objet
             $manager->persist($movie);
