@@ -12,6 +12,8 @@ use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Form\MovieeditType;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Service\Myslugger;
+
 
 class MovieController extends AbstractController
 {
@@ -132,7 +134,7 @@ class MovieController extends AbstractController
      * 
      * @Route("/backoffice/movie/add", name="backoffice_movie_add", methods={"GET", "POST"})
      */
-    public function add(Request $request,MovieRepository $movieRepository,ManagerRegistry $doctrine,SluggerInterface $slugger) :Response
+    public function add(Request $request,MovieRepository $movieRepository,ManagerRegistry $doctrine,Myslugger $slugger) :Response
     {
         // préparation des données
         $movie = new Movie();
@@ -142,7 +144,7 @@ class MovieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) { 
             $created = new \DateTime();
             $movie->setCreatedAt($created);
-            $movie->setSlug($slugger->slug(strtolower($movie->getTitle())));
+            $movie->setSlug($slugger->slugify($movie->getTitle()));
                
                 $entityManager = $doctrine->getManager();  
                $entityManager->persist($movie);

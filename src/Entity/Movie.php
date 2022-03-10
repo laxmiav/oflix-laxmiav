@@ -87,6 +87,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(unique=true)
      */
     private $slug;
 
