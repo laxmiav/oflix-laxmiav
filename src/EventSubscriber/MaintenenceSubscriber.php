@@ -14,7 +14,7 @@ class MaintenenceSubscriber implements EventSubscriberInterface
        $response = $event->getResponse();
 
     $replace = str_replace('<body>','<body><div class="alert alert-danger">Maintenance prévue mardi 10 janvier à 17h00</div>',$response);
-     //$response->request->set('<body>', $replace);
+     $response->setContent($replace);
        //dump($replace);
     }
 
