@@ -13,8 +13,8 @@ class MaintenenceSubscriber implements EventSubscriberInterface
     {
        $response = $event->getResponse();
 
-    $replace = str_replace('<body>','<body><div class="alert alert-danger">Maintenance prévue mardi 10 janvier à 17h00</div>',$response);
-     $response->setContent($replace);
+        $replace = str_replace('<body>','<body><div class="alert alert-danger">Maintenance prévue jeudi 17 Mars à 17h00</div>',$response->getContent());
+        $response->setContent($replace);
        //dump($replace);
     }
 
@@ -28,7 +28,7 @@ class MaintenenceSubscriber implements EventSubscriberInterface
     {
         return [
             'kernel.response' => 'onKernelResponse',
-            KernelEvents::RESPONSE => 'onKernelResponse',
+            //KernelEvents::RESPONSE => 'onKernelResponse',
         ];
     }
 }

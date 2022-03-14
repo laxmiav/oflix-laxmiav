@@ -104,7 +104,7 @@ class MovieController extends AbstractController
     {
         
        // $movie = $movieRepository->findOneWithAllData($slug);
-dump($mySlugger);
+
         
 
         // on vérifie si l'identifiant existe dans le tableau
